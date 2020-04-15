@@ -1,8 +1,8 @@
-import 'package:bytebank2/screens/models/contato.dart';
+import 'package:bytebank2/database/contato/dao.dart';
+import 'package:bytebank2/models/contato.dart';
 import 'package:flutter/material.dart';
 
 class FormularioContatos extends StatefulWidget {
-
   @override
   _FormularioContatosState createState() => _FormularioContatosState();
 }
@@ -11,6 +11,8 @@ class _FormularioContatosState extends State<FormularioContatos> {
   final TextEditingController _nomeController = TextEditingController();
 
   final TextEditingController _numContaController = TextEditingController();
+
+  final ContatoDAO _dao = ContatoDAO();
 
   @override
   Widget build(BuildContext context) {
@@ -44,10 +46,9 @@ class _FormularioContatosState extends State<FormularioContatos> {
                   onPressed: () {
                     final String nome = _nomeController.text;
                     final int numConta = int.tryParse(_numContaController.text);
-
                     try {
-                      final Contato contato = Contato(nome, numConta);
-                      Navigator.pop(context, contato);
+                      final Contato contato = Contato(0, nome, numConta);
+                      _dao.salvar(contato).then((id) => Navigator.pop(context));
                     }
                     catch(error) {
                       debugPrint(error.toString());

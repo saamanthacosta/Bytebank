@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'contact/list.dart';
+import 'contato/list.dart';
 
 class Dashboard extends StatelessWidget {
   @override
